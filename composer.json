@@ -1,0 +1,40 @@
+{
+  "name": "merx/youtube-data-sdk",
+  "description": "Query the YouTube Data API V3",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thomas Uhlmann",
+      "email": "thomas@uhlmann.dev"
+    }
+  ],
+  "require": {
+    "php": "^7.4",
+    "php-http/httplug": "^2.0",
+    "php-http/message": "^1.8",
+    "netresearch/jsonmapper": "^1.4"
+  },
+  "require-dev": {
+    "php-http/guzzle6-adapter": "^2.0",
+    "php-http/mock-client": "^1.0",
+    "php-http/vcr-plugin": "^1.0@dev",
+    "phpunit/phpunit": "^9.0"
+  },
+  "suggest": {
+    "php-http/discovery": "Allows for auto-discovery the http client and message factory"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "Merx\\YouTubeData\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Merx\\YouTubeData\\Tests\\": "tests/"
+    }
+  }
+}
