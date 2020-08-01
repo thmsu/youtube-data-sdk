@@ -1,8 +1,8 @@
 <?php
 
-namespace Merx\YouTubeData\Mapper;
+namespace Thmsu\YouTubeData\Mapper;
 
-use Merx\YouTubeData\Model\Video;
+use Thmsu\YouTubeData\Model\Video;
 
 trait MapVideo
 {

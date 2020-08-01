@@ -1,9 +1,9 @@
 <?php
 
-namespace Merx\YouTubeData\Mapper;
+namespace Thmsu\YouTubeData\Mapper;
 
-use Merx\YouTubeData\Model\Channel;
-use Merx\YouTubeData\Model\ChannelImage;
+use Thmsu\YouTubeData\Model\Channel;
+use Thmsu\YouTubeData\Model\ChannelImage;
 
 trait MapChannel
 {

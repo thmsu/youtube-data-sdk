@@ -1,9 +1,9 @@
 <?php
 
-namespace Merx\YouTubeData\Response;
+namespace Thmsu\YouTubeData\Response;
 
-use Merx\YouTubeData\Mapper\MapVideo;
-use Merx\YouTubeData\Model\Video;
+use Thmsu\YouTubeData\Mapper\MapVideo;
+use Thmsu\YouTubeData\Model\Video;
 
 class VideoListResponse extends AbstractResponse
 {
@@ -15,7 +15,7 @@ class VideoListResponse extends AbstractResponse
     protected $video;
 
     /**
-     * @return \Merx\YouTubeData\Model\Video|object
+     * @return \Thmsu\YouTubeData\Model\Video|object
      * @throws \JsonMapper_Exception
      */
     public function getVideo()

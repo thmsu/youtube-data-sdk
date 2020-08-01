@@ -1,6 +1,6 @@
 <?php
 
-namespace Merx\YouTubeData\Model;
+namespace Thmsu\YouTubeData\Model;
 
 class Thumbnail
 {

@@ -1,18 +1,18 @@
 <?php
 
-namespace Merx\YouTubeData\Tests;
+namespace Thmsu\YouTubeData\Tests;
 
-use Merx\YouTubeData\Model\Channel;
-use Merx\YouTubeData\Model\ChannelBrandingSettings;
-use Merx\YouTubeData\Model\ChannelImage;
-use Merx\YouTubeData\Model\Thumbnail;
-use Merx\YouTubeData\Model\Video;
-use Merx\YouTubeData\Model\VideoContentDetails;
-use Merx\YouTubeData\Model\VideoStatistics;
-use Merx\YouTubeData\Response\ChannelListResponse;
-use Merx\YouTubeData\Response\SearchResponse;
-use Merx\YouTubeData\Response\VideoListResponse;
-use Merx\YouTubeData\YouTubeData;
+use Thmsu\YouTubeData\Model\Channel;
+use Thmsu\YouTubeData\Model\ChannelBrandingSettings;
+use Thmsu\YouTubeData\Model\ChannelImage;
+use Thmsu\YouTubeData\Model\Thumbnail;
+use Thmsu\YouTubeData\Model\Video;
+use Thmsu\YouTubeData\Model\VideoContentDetails;
+use Thmsu\YouTubeData\Model\VideoStatistics;
+use Thmsu\YouTubeData\Response\ChannelListResponse;
+use Thmsu\YouTubeData\Response\SearchResponse;
+use Thmsu\YouTubeData\Response\VideoListResponse;
+use Thmsu\YouTubeData\YouTubeData;
 use Http\Client\Common\Plugin\HistoryPlugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;

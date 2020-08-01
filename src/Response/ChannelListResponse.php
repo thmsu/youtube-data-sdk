@@ -1,9 +1,9 @@
 <?php
 
-namespace Merx\YouTubeData\Response;
+namespace Thmsu\YouTubeData\Response;
 
-use Merx\YouTubeData\Mapper\MapChannel;
-use Merx\YouTubeData\Model\Channel;
+use Thmsu\YouTubeData\Mapper\MapChannel;
+use Thmsu\YouTubeData\Model\Channel;
 
 class ChannelListResponse extends AbstractResponse
 {
@@ -15,7 +15,7 @@ class ChannelListResponse extends AbstractResponse
     protected $channel;
 
     /**
-     * @return \Merx\YouTubeData\Model\Channel|object
+     * @return \Thmsu\YouTubeData\Model\Channel|object
      * @throws \JsonMapper_Exception
      */
     public function getChannel()

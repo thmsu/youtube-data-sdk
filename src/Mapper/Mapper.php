@@ -1,6 +1,6 @@
 <?php
 
-namespace Merx\YouTubeData\Mapper;
+namespace Thmsu\YouTubeData\Mapper;
 
 trait Mapper
 {

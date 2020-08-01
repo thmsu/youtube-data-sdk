@@ -1,6 +1,6 @@
 <?php
 
-namespace Merx\YouTubeData\Tests;
+namespace Thmsu\YouTubeData\Tests;
 
 use Http\Client\Common\Plugin\Journal as JournalInterface;
 use Psr\Http\Client\ClientExceptionInterface;

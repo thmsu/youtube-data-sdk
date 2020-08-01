@@ -1,10 +1,10 @@
 <?php
 
-namespace Merx\YouTubeData;
+namespace Thmsu\YouTubeData;
 
-use Merx\YouTubeData\Response\ChannelListResponse;
-use Merx\YouTubeData\Response\SearchResponse;
-use Merx\YouTubeData\Response\VideoListResponse;
+use Thmsu\YouTubeData\Response\ChannelListResponse;
+use Thmsu\YouTubeData\Response\SearchResponse;
+use Thmsu\YouTubeData\Response\VideoListResponse;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;

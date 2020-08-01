@@ -1,9 +1,9 @@
 <?php
 
-namespace Merx\YouTubeData\Response;
+namespace Thmsu\YouTubeData\Response;
 
-use Merx\YouTubeData\Mapper\MapVideo;
-use Merx\YouTubeData\Model\Video;
+use Thmsu\YouTubeData\Mapper\MapVideo;
+use Thmsu\YouTubeData\Model\Video;
 
 class SearchResponse extends AbstractResponse
 {

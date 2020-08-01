@@ -1,6 +1,6 @@
 <?php
 
-namespace Merx\YouTubeData\Response;
+namespace Thmsu\YouTubeData\Response;
 
 use Psr\Http\Message\ResponseInterface;
 
