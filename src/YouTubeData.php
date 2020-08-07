@@ -2,58 +2,33 @@
 
 namespace Thmsu\YouTubeData;
 
+use Http\Client\HttpClient;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Thmsu\YouTubeData\Response\ChannelListResponse;
 use Thmsu\YouTubeData\Response\SearchResponse;
 use Thmsu\YouTubeData\Response\VideoListResponse;
-use Http\Client\HttpClient;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
-use Http\Message\MessageFactory;
-use Psr\Http\Message\ResponseInterface;
 
 class YouTubeData
 {
     const BASE_URL = 'https://www.googleapis.com/youtube/v3';
 
-    /**
-     * @var HttpClient
-     */
-    protected $client;
+    protected HttpClient $client;
 
-    /**
-     * @var MessageFactory
-     */
-    protected $messageFactory;
+    protected RequestFactoryInterface $requestFactory;
 
-    /**
-     * @var string
-     */
-    protected $apiKey;
+    protected ?string $apiKey = null;
 
-    /**
-     * @var \JsonMapper
-     */
-    protected $mapper;
-
-    /**
-     * @var array
-     */
-    protected $currentQuery;
-
-    protected function __construct(HttpClient $client = null, MessageFactory $messageFactory = null)
+    protected function __construct(HttpClient $client = null, RequestFactoryInterface $messageFactory = null)
     {
-        $this->client = $client ?: HttpClientDiscovery::find();
-        $this->messageFactory = $messageFactory ?: MessageFactoryDiscovery::find();
+        $this->client         = $client ?: HttpClientDiscovery::find();
+        $this->requestFactory = $messageFactory ?: Psr17FactoryDiscovery::findRequestFactory();
     }
 
-    /**
-     * @param string              $apiKey
-     * @param HttpClient|null     $client
-     * @param MessageFactory|null $messageFactory
-     *
-     * @return YouTubeData
-     */
-    public static function create(string $apiKey, HttpClient $client = null, MessageFactory $messageFactory = null)
+    public static function create(string $apiKey, HttpClient $client = null, RequestFactoryInterface $messageFactory = null): YouTubeData
     {
         $youtube = new self($client, $messageFactory);
         $youtube->setApiKey($apiKey);
@@ -61,148 +36,96 @@ class YouTubeData
         return $youtube;
     }
 
-    /**
-     * @param string $apiKey
-     *
-     * @return YouTubeData
-     */
-    public function setApiKey(string $apiKey)
+    public function setApiKey(string $apiKey): self
     {
         $this->apiKey = $apiKey;
 
         return $this;
     }
 
-    /**
-     * @param HttpClient $client
-     *
-     * @return YouTubeData
-     */
-    public function setClient(HttpClient $client)
+    public function setClient(HttpClient $client): self
     {
         $this->client = $client;
 
         return $this;
     }
 
-    /**
-     * @param MessageFactory $messageFactory
-     *
-     * @return YouTubeData
-     */
-    public function setMessageFactory(MessageFactory $messageFactory)
+    public function setRequestFactory(RequestFactoryInterface $requestFactory): self
     {
-        $this->messageFactory = $messageFactory;
+        $this->requestFactory = $requestFactory;
 
         return $this;
     }
 
-    /**
-     * @param string $query
-     * @param int    $maxResults
-     *
-     * @param array  $config
-     *
-     * @return SearchResponse
-     * @throws \Http\Client\Exception
-     */
-    public function search(string $query, $maxResults = 10, array $config = [])
+    public function search(string $query, int $maxResults = 10, array $config = []): SearchResponse
     {
-        $url = self::BASE_URL . '/search';
+        $url = self::BASE_URL.'/search';
 
-        $this->currentQuery = array_merge([
+        $query = array_merge([
             'q'          => $query,
             'maxResults' => $maxResults,
             'part'       => 'snippet',
             'key'        => $this->apiKey,
         ], $config);
 
-        $url .= '?' . http_build_query($this->currentQuery);
+        $url .= '?'.http_build_query($query);
 
-        $request = $this->messageFactory->createRequest('GET', $url);
+        $request  = $this->requestFactory->createRequest('GET', $url);
         $response = $this->sendRequest($request);
 
         return new SearchResponse($response);
     }
 
-    /**
-     * @param SearchResponse $lastResponse
-     *
-     * @return SearchResponse
-     * @throws \Http\Client\Exception
-     */
-    public function moreSearchResults(SearchResponse $lastResponse)
+    public function moreSearchResults(string $nextPageToken): SearchResponse
     {
-        $url = self::BASE_URL . '/search';
+        $url = self::BASE_URL.'/search';
 
-        if (null === $nextPageToken = $lastResponse->getNextPageToken()) {
-            throw new \Exception('No more results');
-        }
-
-        $query = array_merge($this->currentQuery, [
+        $query = array_merge([
             'pageToken' => $nextPageToken,
+//            'maxResults' => $maxResults,
+            'part' => 'snippet',
+            'key'  => $this->apiKey,
         ]);
 
-        $url .= '?' . http_build_query($query);
+        $url .= '?'.http_build_query($query);
 
-        $request = $this->messageFactory->createRequest('GET', $url);
+        $request  = $this->requestFactory->createRequest('GET', $url);
         $response = $this->sendRequest($request);
 
         return new SearchResponse($response);
     }
 
-    /**
-     * @param       $id
-     *
-     * @param array $parts
-     *
-     * @return VideoListResponse
-     * @throws \Http\Client\Exception
-     */
-    public function getVideoById($id, $parts = ['snippet', 'contentDetails', 'statistics'])
+    public function getVideoById(string $id, array $parts = ['snippet', 'contentDetails', 'statistics']): VideoListResponse
     {
-        $url = self::BASE_URL . '/videos';
-        $url .= '?' . http_build_query([
+        $url = self::BASE_URL.'/videos';
+        $url .= '?'.http_build_query([
                 'id'   => $id,
                 'part' => join(',', $parts),
                 'key'  => $this->apiKey,
             ]);
 
-        $request = $this->messageFactory->createRequest('GET', $url);
+        $request  = $this->requestFactory->createRequest('GET', $url);
         $response = $this->sendRequest($request);
 
         return new VideoListResponse($response);
     }
 
-    /**
-     * @param string $id
-     * @param array  $parts
-     *
-     * @return ChannelListResponse
-     * @throws \Http\Client\Exception
-     */
-    public function getChannelById(string $id, $parts = ['snippet'])
+    public function getChannelById(string $id, array $parts = ['snippet']): ChannelListResponse
     {
-        $url = self::BASE_URL . '/channels';
-        $url .= '?' . http_build_query([
+        $url = self::BASE_URL.'/channels';
+        $url .= '?'.http_build_query([
                 'id'   => $id,
                 'part' => join(',', $parts),
                 'key'  => $this->apiKey,
             ]);
 
-        $request = $this->messageFactory->createRequest('GET', $url);
+        $request  = $this->requestFactory->createRequest('GET', $url);
         $response = $this->sendRequest($request);
 
         return new ChannelListResponse($response);
     }
 
-    /**
-     * @param $request
-     *
-     * @return ResponseInterface
-     * @throws \Http\Client\Exception
-     */
-    protected function sendRequest($request): ResponseInterface
+    protected function sendRequest(RequestInterface $request): ResponseInterface
     {
         return $this->client->sendRequest($request);
     }

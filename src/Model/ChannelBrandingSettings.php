@@ -2,22 +2,26 @@
 
 namespace Thmsu\YouTubeData\Model;
 
+use stdClass;
+
 class ChannelBrandingSettings
 {
-    /**
-     * @var string
-     */
-    protected $profileColor;
+    protected string $profileColor;
 
-    /**
-     * @var ChannelImage[]
-     */
-    protected $image;
+    /** @var ChannelImage[] */
+    protected array $images;
 
-    /**
-     * @return string
-     */
-    public function getProfileColor()
+    public function __construct(object $item)
+    {
+        $this->profileColor = $item->channel->profileColor;
+        $this->images       = array_reduce(array_keys(get_object_vars($item->image ?? new stdClass()) ?? []), function (array $list, string $key) use ($item) {
+            $list[$key] = new ChannelImage($key, $item->image->$key);
+
+            return $list;
+        }, []);
+    }
+
+    public function getProfileColor(): string
     {
         return $this->profileColor;
     }
@@ -25,34 +29,19 @@ class ChannelBrandingSettings
     /**
      * @return ChannelImage[]
      */
-    public function getImages()
+    public function getImages(): array
     {
-        return $this->image;
+        return $this->images;
     }
 
-    /**
-     * @param ChannelImage[] $image
-     *
-     * @return ChannelBrandingSettings
-     */
-    public function setImages(array $image)
+    public function getImageByType(string $type): ?ChannelImage
     {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * @param $type
-     *
-     * @return ChannelImage|null
-     */
-    public function getImageByType($type)
-    {
-        foreach ($this->image as $image) {
+        foreach ($this->images as $image) {
             if ($image->getType() === $type) {
                 return $image;
             }
         }
+
+        return null;
     }
 }

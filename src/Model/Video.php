@@ -2,204 +2,144 @@
 
 namespace Thmsu\YouTubeData\Model;
 
+use DateTimeImmutable;
+use stdClass;
+
 class Video
 {
-    /**
-     * @var string
-     */
-    protected $videoId;
+    protected string $videoId;
 
-    /**
-     * @var string
-     */
-    protected $title;
+    protected string $title;
 
-    /**
-     * @var string
-     */
-    protected $description;
+    protected string $description;
 
-    /**
-     * @var string
-     */
-    protected $categoryId;
+    protected ?string $categoryId;
 
-    /**
-     * @var string
-     */
-    protected $liveBroadcastContent;
+    protected string $liveBroadcastContent;
 
-    /**
-     * @var string
-     */
-    protected $defaultLanguage;
+    protected ?string $defaultLanguage;
 
-    /**
-     * @var string
-     */
-    protected $defaultAudioLanguage;
+    protected ?string $defaultAudioLanguage;
 
-    /**
-     * @var \DateTimeImmutable
-     */
-    protected $publishedAt;
+    protected DateTimeImmutable $publishedAt;
 
-    /**
-     * @var string
-     */
-    protected $channelId;
+    protected string $channelId;
 
-    /**
-     * @var string
-     */
-    protected $channelTitle;
+    protected string $channelTitle;
 
-    /**
-     * @var array
-     */
-    protected $tags = [];
+    protected array $tags = [];
 
-    /**
-     * @var Thumbnail[]
-     */
-    protected $thumbnails = [];
+    /** @var Thumbnail[] */
+    protected array $thumbnails = [];
 
-    /**
-     * @var VideoStatistics
-     */
-    protected $statistics;
+    protected ?VideoStatistics $statistics;
 
-    /**
-     * @var VideoContentDetails
-     */
-    protected $contentDetails;
+    protected ?VideoContentDetails $contentDetails;
 
-    /**
-     * @return string
-     */
-    public function getVideoId()
+    public function __construct(object $item)
+    {
+        $this->videoId              = $item->id->videoId ?? $item->id;
+        $this->title                = $item->snippet->title;
+        $this->description          = $item->snippet->description;
+        $this->categoryId           = $item->categoryId ?? $item->snippet->categoryId ?? null;
+        $this->liveBroadcastContent = $item->snippet->liveBroadcastContent;
+        $this->defaultLanguage      = $item->snippet->defaultLanguage      ?? null;
+        $this->defaultAudioLanguage = $item->snippet->defaultAudioLanguage ?? null;
+        $this->tags                 = $item->snippet->tags                 ?? [];
+        $this->publishedAt          = new DateTimeImmutable($item->snippet->publishedAt);
+        $this->channelId            = $item->snippet->channelId;
+        $this->channelTitle         = $item->snippet->channelTitle;
+        $this->statistics           = property_exists($item, 'statistics')
+            ? new VideoStatistics($item->statistics)
+            : null;
+        $this->contentDetails = property_exists($item, 'contentDetails')
+            ? new VideoContentDetails($item->contentDetails)
+            : null;
+
+        $this->thumbnails = array_reduce(array_keys(get_object_vars($item->snippet->thumbnails ?? new stdClass()) ?? []), function (array $list, string $key) use ($item) {
+            $list[$key] = new Thumbnail($item->snippet->thumbnails->$key);
+
+            return $list;
+        }, []);
+    }
+
+    public function getVideoId(): string
     {
         return $this->videoId;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
-        return 'https://www.youtube.com/watch?v=' . $this->getVideoId();
+        return 'https://www.youtube.com/watch?v='.$this->getVideoId();
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
-    public function getCategoryId()
+    public function getCategoryId(): ?string
     {
         return $this->categoryId;
     }
 
-    /**
-     * @return string
-     */
-    public function getLiveBroadcastContent()
+    public function getLiveBroadcastContent(): string
     {
         return $this->liveBroadcastContent;
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultLanguage()
+    public function getDefaultLanguage(): ?string
     {
         return $this->defaultLanguage;
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultAudioLanguage()
+    public function getDefaultAudioLanguage(): ?string
     {
         return $this->defaultAudioLanguage;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
-    public function getPublishedAt()
+    public function getPublishedAt(): DateTimeImmutable
     {
         return $this->publishedAt;
     }
 
-    /**
-     * @return string
-     */
-    public function getChannelId()
+    public function getChannelId(): string
     {
         return $this->channelId;
     }
 
-    /**
-     * @return string
-     */
-    public function getChannelTitle()
+    public function getChannelTitle(): string
     {
         return $this->channelTitle;
     }
 
-    /**
-     * @return array
-     */
     public function getTags(): array
     {
         return $this->tags;
     }
 
-    /**
-     * @return Thumbnail[]
-     */
-    public function getThumbnails()
+    /** @return Thumbnail[] */
+    public function getThumbnails(): array
     {
         return $this->thumbnails;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return Thumbnail|null
-     */
-    public function getThumbnail(string $type)
+    public function getThumbnail(string $type): ?Thumbnail
     {
         return $this->thumbnails[$type] ?? null;
     }
 
-    /**
-     * @return VideoStatistics|null
-     */
-    public function getStatistics()
+    public function getStatistics(): ?VideoStatistics
     {
         return $this->statistics;
     }
 
-    /**
-     * @return VideoContentDetails|null
-     */
-    public function getDetails()
+    public function getDetails(): ?VideoContentDetails
     {
         return $this->contentDetails;
     }

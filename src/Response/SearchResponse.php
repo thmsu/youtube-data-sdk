@@ -2,56 +2,42 @@
 
 namespace Thmsu\YouTubeData\Response;
 
-use Thmsu\YouTubeData\Mapper\MapVideo;
 use Thmsu\YouTubeData\Model\Video;
 
 class SearchResponse extends AbstractResponse
 {
-    use MapVideo;
+    /** @var Video[] */
+    protected ?array $videos = null;
 
-    /**
-     * @var Video[]
-     */
-    protected $videos;
-
-    /**
-     * @return Video[]
-     */
-    public function getVideos()
+    /** @return Video[] */
+    public function getVideos(): array
     {
         if (!$this->videos) {
             $content = $this->getContent();
 
-            $this->videos = $this->mapVideoList($content->items);
+            $this->videos = array_map(function (object $item) {
+                return new Video($item);
+            }, $content->items);
         }
 
         return $this->videos;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPrevPageToken()
+    public function getPrevPageToken(): ?string
     {
         $content = $this->getContent();
-        
+
         return property_exists($content, 'prevPageToken') ? $content->prevPageToken : null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getNextPageToken()
+    public function getNextPageToken(): ?string
     {
         $content = $this->getContent();
 
         return property_exists($content, 'nextPageToken') ? $content->nextPageToken : null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getTotalResults()
+    public function getTotalResults(): ?int
     {
         $content = $this->getContent();
 

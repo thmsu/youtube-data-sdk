@@ -10,11 +10,13 @@
   ],
   "require": {
     "php": "^7.4",
+    "ext-json": "*",
     "php-http/httplug": "^2.0",
     "php-http/message": "^1.8",
-    "netresearch/jsonmapper": "^1.4"
+    "vimeo/psalm": "^3.0@dev"
   },
   "require-dev": {
+    "nyholm/psr7": "^1.0@dev",
     "php-http/guzzle6-adapter": "^2.0",
     "php-http/mock-client": "^1.0",
     "php-http/vcr-plugin": "^1.0@dev",
@@ -36,5 +38,10 @@
     "psr-4": {
       "Thmsu\\YouTubeData\\Tests\\": "tests/"
     }
+  },
+  "scripts": {
+    "check-style": "php-cs-fixer fix --using-cache=no --diff --config=.php_cs --dry-run --ansi",
+    "fix-style": "php-cs-fixer fix --using-cache=no --config=.php_cs --ansi",
+    "psalm": "vendor/bin/psalm"
   }
 }

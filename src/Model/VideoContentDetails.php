@@ -2,82 +2,58 @@
 
 namespace Thmsu\YouTubeData\Model;
 
+use DateInterval;
+
 class VideoContentDetails
 {
-    /**
-     * @var \DateInterval
-     */
-    protected $duration;
+    protected DateInterval $duration;
 
-    /**
-     * @var string
-     */
-    protected $dimension;
+    protected string $dimension;
 
-    /**
-     * @var string
-     */
-    protected $definition;
+    protected string $definition;
 
-    /**
-     * @var string
-     */
-    protected $caption;
+    protected string $caption;
 
-    /**
-     * @var boolean
-     */
-    protected $licensedContent;
+    protected bool $licensedContent;
 
-    /**
-     * @var string
-     */
-    protected $projection;
+    protected string $projection;
 
-    /**
-     * @return \DateInterval
-     */
-    public function getDuration()
+    public function __construct(object $item)
+    {
+        $this->duration        = new DateInterval($item->duration);
+        $this->dimension       = $item->dimension;
+        $this->definition      = $item->definition;
+        $this->caption         = $item->caption;
+        $this->licensedContent = $item->licensedContent;
+        $this->projection      = $item->projection;
+    }
+
+    public function getDuration(): DateInterval
     {
         return $this->duration;
     }
 
-    /**
-     * @return string
-     */
-    public function getDimension()
+    public function getDimension(): string
     {
         return $this->dimension;
     }
 
-    /**
-     * @return string
-     */
-    public function getDefinition()
+    public function getDefinition(): string
     {
         return $this->definition;
     }
 
-    /**
-     * @return string
-     */
-    public function getCaption()
+    public function getCaption(): string
     {
         return $this->caption;
     }
 
-    /**
-     * @return bool
-     */
-    public function isLicensedContent()
+    public function isLicensedContent(): bool
     {
         return $this->licensedContent;
     }
 
-    /**
-     * @return string
-     */
-    public function getProjection()
+    public function getProjection(): string
     {
         return $this->projection;
     }

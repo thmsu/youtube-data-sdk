@@ -4,128 +4,47 @@ namespace Thmsu\YouTubeData\Model;
 
 class VideoStatistics
 {
-    /**
-     * @var integer
-     */
-    protected $viewCount = 0;
+    protected int $viewCount = 0;
 
-    /**
-     * @var integer
-     */
-    protected $likeCount = 0;
+    protected int $likeCount = 0;
 
-    /**
-     * @var integer
-     */
-    protected $dislikeCount = 0;
+    protected int $dislikeCount = 0;
 
-    /**
-     * @var integer
-     */
-    protected $favoriteCount = 0;
+    protected int $favoriteCount = 0;
 
-    /**
-     * @var integer;
-     */
-    protected $commentCount = 0;
+    protected int $commentCount = 0;
 
-    /**
-     * @return int
-     */
-    public function getViewCount()
+    public function __construct(object $item)
+    {
+        $this->viewCount     = $item->viewCount;
+        $this->likeCount     = $item->likeCount;
+        $this->dislikeCount  = $item->dislikeCount;
+        $this->favoriteCount = $item->favoriteCount;
+        $this->commentCount  = $item->commentCount;
+    }
+
+    public function getViewCount(): int
     {
         return $this->viewCount;
     }
 
-    /**
-     * @param int $viewCount
-     *
-     * @return VideoStatistics
-     */
-    public function setViewCount(int $viewCount)
-    {
-        $this->viewCount = $viewCount;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLikeCount()
+    public function getLikeCount(): int
     {
         return $this->likeCount;
     }
 
-    /**
-     * @param int $likeCount
-     *
-     * @return VideoStatistics
-     */
-    public function setLikeCount(int $likeCount)
-    {
-        $this->likeCount = $likeCount;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDislikeCount()
+    public function getDislikeCount(): int
     {
         return $this->dislikeCount;
     }
 
-    /**
-     * @param int $dislikeCount
-     *
-     * @return VideoStatistics
-     */
-    public function setDislikeCount(int $dislikeCount)
-    {
-        $this->dislikeCount = $dislikeCount;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getFavoriteCount()
+    public function getFavoriteCount(): int
     {
         return $this->favoriteCount;
     }
 
-    /**
-     * @param int $favoriteCount
-     *
-     * @return VideoStatistics
-     */
-    public function setFavoriteCount(int $favoriteCount)
-    {
-        $this->favoriteCount = $favoriteCount;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCommentCount()
+    public function getCommentCount(): int
     {
         return $this->commentCount;
-    }
-
-    /**
-     * @param int $commentCount
-     *
-     * @return VideoStatistics
-     */
-    public function setCommentCount(int $commentCount)
-    {
-        $this->commentCount = $commentCount;
-
-        return $this;
     }
 }

@@ -2,29 +2,21 @@
 
 namespace Thmsu\YouTubeData\Response;
 
-use Thmsu\YouTubeData\Mapper\MapVideo;
+use Psr\Http\Message\ResponseInterface;
 use Thmsu\YouTubeData\Model\Video;
 
 class VideoListResponse extends AbstractResponse
 {
-    use MapVideo;
+    protected Video $video;
 
-    /**
-     * @var Video
-     */
-    protected $video;
-
-    /**
-     * @return \Thmsu\YouTubeData\Model\Video|object
-     * @throws \JsonMapper_Exception
-     */
-    public function getVideo()
+    public function __construct(ResponseInterface $response)
     {
-        if (!$this->video) {
-            $content = $this->getContent();
-            $this->video = $this->mapVideo($content->items[0]);
-        }
+        $this->response = $response;
+        $this->video    = new Video($this->getContent()->items[0]);
+    }
 
+    public function getVideo(): Video
+    {
         return $this->video;
     }
 }

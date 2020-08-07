@@ -2,8 +2,16 @@
 
 namespace Thmsu\YouTubeData\Tests;
 
+use function GuzzleHttp\Psr7\parse_query;
+use Http\Client\Common\Plugin\HistoryPlugin;
+use Http\Client\Common\PluginClient;
+use Http\Client\Plugin\Vcr\NamingStrategy\PathNamingStrategy;
+use Http\Client\Plugin\Vcr\Recorder\FilesystemRecorder;
+use Http\Client\Plugin\Vcr\RecordPlugin;
+use Http\Client\Plugin\Vcr\ReplayPlugin;
+use Http\Discovery\HttpClientDiscovery;
+use PHPUnit\Framework\TestCase;
 use Thmsu\YouTubeData\Model\Channel;
-use Thmsu\YouTubeData\Model\ChannelBrandingSettings;
 use Thmsu\YouTubeData\Model\ChannelImage;
 use Thmsu\YouTubeData\Model\Thumbnail;
 use Thmsu\YouTubeData\Model\Video;
@@ -13,19 +21,6 @@ use Thmsu\YouTubeData\Response\ChannelListResponse;
 use Thmsu\YouTubeData\Response\SearchResponse;
 use Thmsu\YouTubeData\Response\VideoListResponse;
 use Thmsu\YouTubeData\YouTubeData;
-use Http\Client\Common\Plugin\HistoryPlugin;
-use Http\Client\Common\PluginClient;
-use Http\Client\HttpClient;
-use Http\Client\Plugin\Vcr\NamingStrategy\PathNamingStrategy;
-use Http\Client\Plugin\Vcr\Recorder\FilesystemRecorder;
-use Http\Client\Plugin\Vcr\RecordPlugin;
-use Http\Client\Plugin\Vcr\ReplayPlugin;
-use Http\Discovery\HttpClientDiscovery;
-use Psr\Http\Message\RequestInterface;
-use function GuzzleHttp\Psr7\parse_query;
-use GuzzleHttp\Psr7\Response;
-use Http\Mock\Client;
-use PHPUnit\Framework\TestCase;
 
 class YouTubeDataTest extends TestCase
 {
@@ -40,33 +35,33 @@ class YouTubeDataTest extends TestCase
 
         $result = $youtube->search('surfing', 5);
 
-        ## Request
+        //# Request
         $request = $this->journal->getLastRequest();
-        $query = parse_query($request->getUri()->getQuery());
+        $query   = parse_query($request->getUri()->getQuery());
         $this->assertEquals($_SERVER['YOUTUBE_API_KEY'], $query['key']);
         $this->assertEquals('surfing', $query['q']);
         $this->assertEquals(5, $query['maxResults']);
 
-        ## Response
+        //# Response
         $this->assertInstanceOf(SearchResponse::class, $result);
         $this->assertEquals(null, $result->getPrevPageToken());
         $this->assertEquals('CAUQAA', $result->getNextPageToken());
         $this->assertEquals(1000000, $result->getTotalResults());
 
-        ## Video Mapping
+        //# Video Mapping
         $this->assertCount(5, $result->getVideos());
         $video = $result->getVideos()[0];
 
-        $this->assertEquals("hwLo7aU1Aas", $video->getVideoId());
-        $this->assertEquals("The Best Surfing Clips of 2019", $video->getTitle());
-        $this->assertEquals("", $video->getDescription());
-        $this->assertEquals("https://www.youtube.com/watch?v=hwLo7aU1Aas", $video->getUrl());
-        $this->assertEquals("UCKo-NbWOxnxBnU41b-AoKeA", $video->getChannelId());
-        $this->assertEquals("SURFER", $video->getChannelTitle());
-        $this->assertEquals("2019-12-26", $video->getPublishedAt()->format('Y-m-d'));
-        $this->assertEquals("none", $video->getLiveBroadcastContent());
+        $this->assertEquals('hwLo7aU1Aas', $video->getVideoId());
+        $this->assertEquals('The Best Surfing Clips of 2019', $video->getTitle());
+        $this->assertEquals('', $video->getDescription());
+        $this->assertEquals('https://www.youtube.com/watch?v=hwLo7aU1Aas', $video->getUrl());
+        $this->assertEquals('UCKo-NbWOxnxBnU41b-AoKeA', $video->getChannelId());
+        $this->assertEquals('SURFER', $video->getChannelTitle());
+        $this->assertEquals('2019-12-26', $video->getPublishedAt()->format('Y-m-d'));
+        $this->assertEquals('none', $video->getLiveBroadcastContent());
 
-        ## Thumbnails
+        //# Thumbnails
         $this->assertCount(3, $video->getThumbnails());
         $thumbnail = $video->getThumbnail(Thumbnail::TYPE_DEFAULT);
 
@@ -82,39 +77,39 @@ class YouTubeDataTest extends TestCase
 
         $result = $youtube->getVideoById('Ks-_Mh1QhMc');
 
-        ## Request
+        //# Request
         $request = $this->journal->getLastRequest();
-        $query = parse_query($request->getUri()->getQuery());
+        $query   = parse_query($request->getUri()->getQuery());
         $this->assertEquals('Ks-_Mh1QhMc', $query['id']);
         $this->assertEquals('snippet,contentDetails,statistics', $query['part']);
         $this->assertEquals($_SERVER['YOUTUBE_API_KEY'], $query['key']);
 
-        ## Response
+        //# Response
         $this->assertInstanceOf(VideoListResponse::class, $result);
 
-        ## Video Mapping
+        //# Video Mapping
         $video = $result->getVideo();
         $this->assertInstanceOf(Video::class, $video);
 
-        $this->assertEquals("Ks-_Mh1QhMc", $video->getVideoId());
-        $this->assertEquals("Your body language may shape who you are | Amy Cuddy", $video->getTitle());
-        $this->assertStringStartsWith("Body language affects how others see us", $video->getDescription());
-        $this->assertEquals("https://www.youtube.com/watch?v=Ks-_Mh1QhMc", $video->getUrl());
-        $this->assertEquals("UCAuUUnT6oDeKwE6v1NGQxug", $video->getChannelId());
-        $this->assertEquals("TED", $video->getChannelTitle());
-        $this->assertEquals("2012-10-01", $video->getPublishedAt()->format('Y-m-d'));
-        $this->assertEquals("none", $video->getLiveBroadcastContent());
-        $this->assertEquals("22", $video->getCategoryId());
+        $this->assertEquals('Ks-_Mh1QhMc', $video->getVideoId());
+        $this->assertEquals('Your body language may shape who you are | Amy Cuddy', $video->getTitle());
+        $this->assertStringStartsWith('Body language affects how others see us', $video->getDescription());
+        $this->assertEquals('https://www.youtube.com/watch?v=Ks-_Mh1QhMc', $video->getUrl());
+        $this->assertEquals('UCAuUUnT6oDeKwE6v1NGQxug', $video->getChannelId());
+        $this->assertEquals('TED', $video->getChannelTitle());
+        $this->assertEquals('2012-10-01', $video->getPublishedAt()->format('Y-m-d'));
+        $this->assertEquals('none', $video->getLiveBroadcastContent());
+        $this->assertEquals('22', $video->getCategoryId());
         $this->assertTrue(in_array('Amy Cuddy', $video->getTags()));
         $this->assertTrue(in_array('TED', $video->getTags()));
         $this->assertTrue(in_array('psychology', $video->getTags()));
         $this->assertEquals('en', $video->getDefaultLanguage());
         $this->assertEquals('en', $video->getDefaultAudioLanguage());
 
-        ## Thumbnails
+        //# Thumbnails
         $this->assertCount(5, $video->getThumbnails());
 
-        ## Statistics
+        //# Statistics
         $stats = $video->getStatistics();
         $this->assertInstanceOf(VideoStatistics::class, $stats);
         $this->assertEquals(18328717, $stats->getViewCount());
@@ -123,7 +118,7 @@ class YouTubeDataTest extends TestCase
         $this->assertEquals(0, $stats->getFavoriteCount());
         $this->assertEquals(8210, $stats->getCommentCount());
 
-        ## Content Details
+        //# Content Details
         $details = $video->getDetails();
         $this->assertInstanceOf(VideoContentDetails::class, $details);
         $this->assertEquals('21', $details->getDuration()->format('%i'));
@@ -141,17 +136,17 @@ class YouTubeDataTest extends TestCase
 
         $result = $youtube->getChannelById('UC_x5XG1OV2P6uZZ5FSM9Ttw', ['snippet', 'contentDetails', 'statistics', 'brandingSettings']);
 
-        ## Request
+        //# Request
         $request = $this->journal->getLastRequest();
-        $query = parse_query($request->getUri()->getQuery());
+        $query   = parse_query($request->getUri()->getQuery());
         $this->assertEquals('UC_x5XG1OV2P6uZZ5FSM9Ttw', $query['id']);
         $this->assertEquals('snippet,contentDetails,statistics,brandingSettings', $query['part']);
         $this->assertEquals($_SERVER['YOUTUBE_API_KEY'], $query['key']);
 
-        ## Response
+        //# Response
         $this->assertInstanceOf(ChannelListResponse::class, $result);
 
-        ## Channel Mapping
+        //# Channel Mapping
         $channel = $result->getChannel();
         $this->assertInstanceOf(Channel::class, $channel);
 
@@ -164,7 +159,7 @@ class YouTubeDataTest extends TestCase
         $this->assertCount(3, $channel->getThumbnails());
         $this->assertInstanceOf(Thumbnail::class, $channel->getThumbnail(Thumbnail::TYPE_DEFAULT));
 
-        ## Brand Settings
+        //# Brand Settings
         $brand = $channel->getBrandingSettings();
 
         $this->assertEquals('#000000', $brand->getProfileColor());
@@ -176,7 +171,7 @@ class YouTubeDataTest extends TestCase
     {
         $namingStrategy = new PathNamingStrategy();
 
-        $recorder = new FilesystemRecorder(__DIR__ . '/.responses');
+        $recorder = new FilesystemRecorder(__DIR__.'/.responses');
 
         $record = new RecordPlugin($namingStrategy, $recorder);
 

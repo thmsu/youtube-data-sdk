@@ -2,87 +2,68 @@
 
 namespace Thmsu\YouTubeData\Model;
 
+use DateTimeImmutable;
+use stdClass;
+
 class Channel
 {
-    /**
-     * @var string
-     */
-    protected $id;
+    protected string $id;
 
-    /**
-     * @var string
-     */
-    protected $title;
+    protected string $title;
 
-    /**
-     * @var string
-     */
-    protected $description;
+    protected string $description;
 
-    /**
-     * @var string
-     */
-    protected $customUrl;
+    protected string $customUrl;
 
-    /**
-     * @var \DateTimeImmutable
-     */
-    protected $publishedAt;
+    protected DateTimeImmutable $publishedAt;
 
-    /**
-     * @var Thumbnail[]
-     */
-    protected $thumbnails;
+    /** @var Thumbnail[] */
+    protected array $thumbnails;
 
-    /**
-     * @var ChannelBrandingSettings
-     */
-    protected $brandingSettings;
+    protected ?ChannelBrandingSettings $brandingSettings;
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function __construct(object $item)
+    {
+        $this->id               = $item->id;
+        $this->title            = $item->snippet->title;
+        $this->description      = $item->snippet->description;
+        $this->customUrl        = $item->snippet->customUrl;
+        $this->publishedAt      = new DateTimeImmutable($item->snippet->publishedAt);
+        $this->brandingSettings = new ChannelBrandingSettings($item->brandingSettings);
+
+        $this->thumbnails = array_reduce(array_keys(get_object_vars($item->snippet->thumbnails ?? new stdClass()) ?? []), function (array $list, string $key) use ($item) {
+            $list[$key] = new Thumbnail($item->snippet->thumbnails->$key);
+
+            return $list;
+        }, []);
+    }
+
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
-        return 'https://www.youtube.com/channel/' . $this->id;
+        return 'https://www.youtube.com/channel/'.$this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getCustomUrl()
+    public function getCustomUrl(): string
     {
         return $this->customUrl;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
-    public function getPublishedAt()
+    public function getPublishedAt(): DateTimeImmutable
     {
         return $this->publishedAt;
     }
@@ -90,35 +71,22 @@ class Channel
     /**
      * @return Thumbnail[]
      */
-    public function getThumbnails()
+    public function getThumbnails(): array
     {
         return $this->thumbnails;
     }
 
-    /**
-     * @param $type
-     *
-     * @return Thumbnail|null
-     */
-    public function getThumbnail(string $type)
+    public function getThumbnail(string $type): ?Thumbnail
     {
         return $this->thumbnails[$type] ?? null;
     }
 
-    /**
-     * @return ChannelBrandingSettings
-     */
-    public function getBrandingSettings()
+    public function getBrandingSettings(): ?ChannelBrandingSettings
     {
         return $this->brandingSettings;
     }
 
-    /**
-     * @param ChannelBrandingSettings $brandingSettings
-     *
-     * @return Channel
-     */
-    public function setBrandingSettings(ChannelBrandingSettings $brandingSettings)
+    public function setBrandingSettings(ChannelBrandingSettings $brandingSettings): self
     {
         $this->brandingSettings = $brandingSettings;
 

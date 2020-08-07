@@ -2,27 +2,17 @@
 
 namespace Thmsu\YouTubeData\Response;
 
-use Thmsu\YouTubeData\Mapper\MapChannel;
 use Thmsu\YouTubeData\Model\Channel;
 
 class ChannelListResponse extends AbstractResponse
 {
-    use MapChannel;
+    protected ?Channel $channel = null;
 
-    /**
-     * @var Channel
-     */
-    protected $channel;
-
-    /**
-     * @return \Thmsu\YouTubeData\Model\Channel|object
-     * @throws \JsonMapper_Exception
-     */
-    public function getChannel()
+    public function getChannel(): Channel
     {
         if (!$this->channel) {
-            $content = $this->getContent();
-            $this->channel = $this->mapChannel($content->items[0]);
+            $content       = $this->getContent();
+            $this->channel = new Channel($content->items[0]);
         }
 
         return $this->channel;
