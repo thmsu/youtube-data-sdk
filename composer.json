@@ -12,15 +12,15 @@
     "php": "^7.4",
     "ext-json": "*",
     "php-http/httplug": "^2.0",
-    "php-http/message": "^1.8",
-    "vimeo/psalm": "^3.0@dev"
+    "php-http/message": "^1.8"
   },
   "require-dev": {
     "nyholm/psr7": "^1.0@dev",
     "php-http/guzzle6-adapter": "^2.0",
     "php-http/mock-client": "^1.0",
     "php-http/vcr-plugin": "^1.0@dev",
-    "phpunit/phpunit": "^9.0"
+    "phpunit/phpunit": "^9.0",
+    "vimeo/psalm": "^3.0@dev"
   },
   "suggest": {
     "php-http/discovery": "Allows for auto-discovery the http client and message factory"
