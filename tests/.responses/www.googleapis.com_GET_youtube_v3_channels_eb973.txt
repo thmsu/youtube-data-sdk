@@ -1,7 +1,7 @@
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=UTF-8
 Vary: X-Origin, Referer, Origin,Accept-Encoding
-Date: Sat, 01 Aug 2020 08:18:26 GMT
+Date: Sun, 09 Aug 2020 09:09:14 GMT
 Server: scaffolding on HTTPServer2
 Cache-Control: private
 X-XSS-Protection: 0
@@ -13,7 +13,7 @@ Alt-Svc: h3-29=":443"; ma=2592000,h3-27=":443"; ma=2592000,h3-T050=":443"; ma=25
 
 {
   "kind": "youtube#channelListResponse",
-  "etag": "O6JIfuXmBrIcLXLSAGRb0owVmOM",
+  "etag": "gpw1gaSPE4t401LEAzTH6Pg7gj0",
   "pageInfo": {
     "totalResults": 1,
     "resultsPerPage": 1
@@ -21,7 +21,7 @@ Alt-Svc: h3-29=":443"; ma=2592000,h3-27=":443"; ma=2592000,h3-T050=":443"; ma=25
   "items": [
     {
       "kind": "youtube#channel",
-      "etag": "Y80rIOmyKD4xq3SJBLhXrti0vj4",
+      "etag": "qFOT7JurCCa8pu_5-m-qQBS20Ik",
       "id": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
       "snippet": {
         "title": "Google Developers",
@@ -61,11 +61,11 @@ Alt-Svc: h3-29=":443"; ma=2592000,h3-27=":443"; ma=2592000,h3-T050=":443"; ma=25
         }
       },
       "statistics": {
-        "viewCount": "174703557",
+        "viewCount": "174942428",
         "commentCount": "0",
-        "subscriberCount": "2080000",
+        "subscriberCount": "2090000",
         "hiddenSubscriberCount": false,
-        "videoCount": "5200"
+        "videoCount": "5201"
       },
       "brandingSettings": {
         "channel": {
@@ -89,7 +89,7 @@ Alt-Svc: h3-29=":443"; ma=2592000,h3-27=":443"; ma=2592000,h3-T050=":443"; ma=25
             "UCdIiCSqXuybzwGwJwrpHPqw",
             "UCwXdFgeE9KYzlDdR7TG9cMw"
           ],
-          "unsubscribedTrailer": "N1ILe952wVU",
+          "unsubscribedTrailer": "zK7yXqCMuJo",
           "profileColor": "#000000",
           "country": "US"
         },
@@ -111,16 +111,16 @@ Alt-Svc: h3-29=":443"; ma=2592000,h3-27=":443"; ma=2592000,h3-T050=":443"; ma=25
         },
         "hints": [
           {
-            "property": "channel.featured_tab.template.string",
-            "value": "Everything"
-          },
-          {
             "property": "channel.banner.mobile.medium.image.url",
             "value": "https://yt3.ggpht.com/rgs1SDEGaYwI7eBKiaNq6X66QdJjy7r8qkwS84M7mSBJj707z0KuUumizXJXwlwlljY5faI0aw=w640-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj"
           },
           {
             "property": "channel.modules.show_comments.bool",
             "value": "True"
+          },
+          {
+            "property": "channel.featured_tab.template.string",
+            "value": "Everything"
           }
         ]
       }

@@ -66,6 +66,7 @@ class YouTubeData
             'maxResults' => $maxResults,
             'part'       => 'snippet',
             'key'        => $this->apiKey,
+            'type'       => 'video'
         ], $config);
 
         $url .= '?'.http_build_query($query);
@@ -85,6 +86,7 @@ class YouTubeData
 //            'maxResults' => $maxResults,
             'part' => 'snippet',
             'key'  => $this->apiKey,
+            'type'       => 'video'
         ]);
 
         $url .= '?'.http_build_query($query);

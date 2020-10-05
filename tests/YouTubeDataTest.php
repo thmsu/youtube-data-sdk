@@ -52,20 +52,20 @@ class YouTubeDataTest extends TestCase
         $this->assertCount(5, $result->getVideos());
         $video = $result->getVideos()[0];
 
-        $this->assertEquals('hwLo7aU1Aas', $video->getVideoId());
-        $this->assertEquals('The Best Surfing Clips of 2019', $video->getTitle());
-        $this->assertEquals('', $video->getDescription());
-        $this->assertEquals('https://www.youtube.com/watch?v=hwLo7aU1Aas', $video->getUrl());
-        $this->assertEquals('UCKo-NbWOxnxBnU41b-AoKeA', $video->getChannelId());
-        $this->assertEquals('SURFER', $video->getChannelTitle());
-        $this->assertEquals('2019-12-26', $video->getPublishedAt()->format('Y-m-d'));
+        $this->assertEquals('W7h-Yho8EB0', $video->getVideoId());
+        $this->assertEquals('GoPro: Top 10 Surf Moments', $video->getTitle());
+        $this->assertEquals('Celebrate International Surf Day with GoPro\'s Top 10 Surf Moments. Shot 100% on GoPro: http://bit.ly/2wUMwfI Get stoked and subscribe: http://goo.gl/HgVXpQ ...', $video->getDescription());
+        $this->assertEquals('https://www.youtube.com/watch?v=W7h-Yho8EB0', $video->getUrl());
+        $this->assertEquals('UCqhnX4jA0A5paNd1v-zEysw', $video->getChannelId());
+        $this->assertEquals('GoPro', $video->getChannelTitle());
+        $this->assertEquals('2019-06-15', $video->getPublishedAt()->format('Y-m-d'));
         $this->assertEquals('none', $video->getLiveBroadcastContent());
 
         //# Thumbnails
         $this->assertCount(3, $video->getThumbnails());
         $thumbnail = $video->getThumbnail(Thumbnail::TYPE_DEFAULT);
 
-        $this->assertEquals('https://i.ytimg.com/vi/hwLo7aU1Aas/default.jpg', $thumbnail->getUrl());
+        $this->assertEquals('https://i.ytimg.com/vi/W7h-Yho8EB0/default.jpg', $thumbnail->getUrl());
         $this->assertEquals(120, $thumbnail->getWidth());
         $this->assertEquals(90, $thumbnail->getHeight());
     }
@@ -112,11 +112,11 @@ class YouTubeDataTest extends TestCase
         //# Statistics
         $stats = $video->getStatistics();
         $this->assertInstanceOf(VideoStatistics::class, $stats);
-        $this->assertEquals(18328717, $stats->getViewCount());
-        $this->assertEquals(262940, $stats->getLikeCount());
-        $this->assertEquals(5168, $stats->getDislikeCount());
+        $this->assertEquals(18351979, $stats->getViewCount());
+        $this->assertEquals(263492, $stats->getLikeCount());
+        $this->assertEquals(5173, $stats->getDislikeCount());
         $this->assertEquals(0, $stats->getFavoriteCount());
-        $this->assertEquals(8210, $stats->getCommentCount());
+        $this->assertEquals(8221, $stats->getCommentCount());
 
         //# Content Details
         $details = $video->getDetails();

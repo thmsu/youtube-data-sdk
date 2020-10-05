@@ -14,6 +14,7 @@ class SearchResponse extends AbstractResponse
     {
         if (!$this->videos) {
             $content = $this->getContent();
+            dump($content);
 
             $this->videos = array_map(function (object $item) {
                 return new Video($item);
