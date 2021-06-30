@@ -9,7 +9,7 @@
     }
   ],
   "require": {
-    "php": "^7.4",
+    "php": "^7.4 || ^8.0 ",
     "ext-json": "*",
     "php-http/httplug": "^2.0",
     "php-http/message": "^1.8"
