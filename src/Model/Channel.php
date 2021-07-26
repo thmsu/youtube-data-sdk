@@ -27,7 +27,7 @@ class Channel
         $this->id               = $item->id;
         $this->title            = $item->snippet->title;
         $this->description      = $item->snippet->description;
-        $this->customUrl        = $item->snippet->customUrl;
+        $this->customUrl        = $item->snippet->customUrl ?? '';
         $this->publishedAt      = new DateTimeImmutable($item->snippet->publishedAt);
         $this->brandingSettings = new ChannelBrandingSettings($item->brandingSettings);
 

@@ -94,7 +94,7 @@ Alt-Svc: h3-29=":443"; ma=2592000,h3-27=":443"; ma=2592000,h3-T050=":443"; ma=25
           "country": "US"
         },
         "image": {
-          "bannerImageUrl": "https://yt3.ggpht.com/rgs1SDEGaYwI7eBKiaNq6X66QdJjy7r8qkwS84M7mSBJj707z0KuUumizXJXwlwlljY5faI0aw=w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
+              "bannerImageUrl": "https://yt3.ggpht.com/rgs1SDEGaYwI7eBKiaNq6X66QdJjy7r8qkwS84M7mSBJj707z0KuUumizXJXwlwlljY5faI0aw=w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
           "bannerMobileImageUrl": "https://yt3.ggpht.com/rgs1SDEGaYwI7eBKiaNq6X66QdJjy7r8qkwS84M7mSBJj707z0KuUumizXJXwlwlljY5faI0aw=w640-fcrop64=1,32b75a57cd48a5a8-k-c0xffffffff-no-nd-rj",
           "bannerTabletLowImageUrl": "https://yt3.ggpht.com/rgs1SDEGaYwI7eBKiaNq6X66QdJjy7r8qkwS84M7mSBJj707z0KuUumizXJXwlwlljY5faI0aw=w1138-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
           "bannerTabletImageUrl": "https://yt3.ggpht.com/rgs1SDEGaYwI7eBKiaNq6X66QdJjy7r8qkwS84M7mSBJj707z0KuUumizXJXwlwlljY5faI0aw=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
