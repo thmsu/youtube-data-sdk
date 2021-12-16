@@ -14,7 +14,7 @@ use Thmsu\YouTubeData\Response\VideoListResponse;
 
 class YouTubeData
 {
-    const BASE_URL = 'https://www.googleapis.com/youtube/v3';
+    public const BASE_URL = 'https://www.googleapis.com/youtube/v3';
 
     protected HttpClient $client;
 
@@ -66,7 +66,7 @@ class YouTubeData
             'maxResults' => $maxResults,
             'part'       => 'snippet',
             'key'        => $this->apiKey,
-            'type'       => 'video'
+            'type'       => 'video',
         ], $config);
 
         $url .= '?'.http_build_query($query);
@@ -84,9 +84,9 @@ class YouTubeData
         $query = array_merge([
             'pageToken' => $nextPageToken,
 //            'maxResults' => $maxResults,
-            'part' => 'snippet',
-            'key'  => $this->apiKey,
-            'type'       => 'video'
+            'part'       => 'snippet',
+            'key'        => $this->apiKey,
+            'type'       => 'video',
         ]);
 
         $url .= '?'.http_build_query($query);

@@ -8,8 +8,6 @@ class VideoStatistics
 
     protected int $likeCount = 0;
 
-    protected int $dislikeCount = 0;
-
     protected int $favoriteCount = 0;
 
     protected int $commentCount = 0;
@@ -18,7 +16,6 @@ class VideoStatistics
     {
         $this->viewCount     = $item->viewCount;
         $this->likeCount     = $item->likeCount;
-        $this->dislikeCount  = $item->dislikeCount;
         $this->favoriteCount = $item->favoriteCount;
         $this->commentCount  = $item->commentCount;
     }
@@ -31,11 +28,6 @@ class VideoStatistics
     public function getLikeCount(): int
     {
         return $this->likeCount;
-    }
-
-    public function getDislikeCount(): int
-    {
-        return $this->dislikeCount;
     }
 
     public function getFavoriteCount(): int

@@ -4,11 +4,11 @@ namespace Thmsu\YouTubeData\Model;
 
 class Thumbnail
 {
-    const TYPE_DEFAULT  = 'default';
-    const TYPE_MEDIUM   = 'medium';
-    const TYPE_HIGH     = 'high';
-    const TYPE_STANDARD = 'standard';
-    const TYPE_MAX_RES  = 'maxRes';
+    public const TYPE_DEFAULT  = 'default';
+    public const TYPE_MEDIUM   = 'medium';
+    public const TYPE_HIGH     = 'high';
+    public const TYPE_STANDARD = 'standard';
+    public const TYPE_MAX_RES  = 'maxRes';
 
     protected string $url;
 

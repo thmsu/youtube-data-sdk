@@ -2,6 +2,7 @@
   "name": "thmsu/youtube-data-sdk",
   "description": "Query the YouTube Data API V3",
   "license": "MIT",
+  "minimum-stability": "stable",
   "authors": [
     {
       "name": "Thomas Uhlmann",
@@ -9,7 +10,7 @@
     }
   ],
   "require": {
-    "php": "^8.0 ",
+    "php": "^8.1 ",
     "ext-json": "*",
     "php-http/httplug": "^2.0",
     "php-http/message": "^1.8"
@@ -26,9 +27,12 @@
     "php-http/discovery": "Allows for auto-discovery the http client and message factory"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "ocramius/package-versions": true,
+      "composer/package-versions-deprecated": true
+    }
   },
-  "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
       "Thmsu\\YouTubeData\\": "src/"
@@ -40,8 +44,8 @@
     }
   },
   "scripts": {
-    "check-style": "php-cs-fixer fix --using-cache=no --diff --dry-run --ansi",
-    "fix-style": "php-cs-fixer fix --using-cache=no --ansi",
+    "style:check": "php-cs-fixer fix --using-cache=no --diff --dry-run --ansi",
+    "style:fix": "php-cs-fixer fix --using-cache=no --ansi",
     "test": "vendor/bin/phpunit",
     "psalm": "vendor/bin/psalm"
   }

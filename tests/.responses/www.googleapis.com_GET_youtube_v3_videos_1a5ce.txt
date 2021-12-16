@@ -1,7 +1,7 @@
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=UTF-8
 Vary: X-Origin, Referer, Origin,Accept-Encoding
-Date: Sun, 09 Aug 2020 09:09:13 GMT
+Date: Thu, 16 Dec 2021 00:45:47 GMT
 Server: scaffolding on HTTPServer2
 Cache-Control: private
 X-XSS-Protection: 0
@@ -9,15 +9,15 @@ X-Frame-Options: SAMEORIGIN
 X-Content-Type-Options: nosniff
 Accept-Ranges: none
 Transfer-Encoding: chunked
-Alt-Svc: h3-29=":443"; ma=2592000,h3-27=":443"; ma=2592000,h3-T050=":443"; ma=2592000,h3-Q050=":443"; ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
+Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000,h3-Q050=":443"; ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
 
 {
   "kind": "youtube#videoListResponse",
-  "etag": "5Omq5YlSWKel2IJwuf65-J9-yXY",
+  "etag": "6I-uQgArgG5k4FLUlho7SsX-xvU",
   "items": [
     {
       "kind": "youtube#video",
-      "etag": "BcdqNa-A24foAg2sIqj9aCWmsoM",
+      "etag": "KL88q7-XXlLgEErPp3ii0aawbtw",
       "id": "Ks-_Mh1QhMc",
       "snippet": {
         "publishedAt": "2012-10-01T15:27:35Z",
@@ -85,11 +85,10 @@ Alt-Svc: h3-29=":443"; ma=2592000,h3-27=":443"; ma=2592000,h3-T050=":443"; ma=25
         "projection": "rectangular"
       },
       "statistics": {
-        "viewCount": "18351979",
-        "likeCount": "263492",
-        "dislikeCount": "5173",
+        "viewCount": "20571094",
+        "likeCount": "317563",
         "favoriteCount": "0",
-        "commentCount": "8221"
+        "commentCount": "8959"
       }
     }
   ],

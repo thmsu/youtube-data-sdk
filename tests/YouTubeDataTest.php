@@ -27,7 +27,7 @@ class YouTubeDataTest extends TestCase
     private Journal $journal;
 
     /** @test */
-    public function it_returns_a_valid_video_search_response()
+    public function itReturnsAValidVideoSearchResponse()
     {
         $client = $this->getClient();
 
@@ -52,26 +52,26 @@ class YouTubeDataTest extends TestCase
         $this->assertCount(5, $result->getVideos());
         $video = $result->getVideos()[0];
 
-        $this->assertEquals('W7h-Yho8EB0', $video->getVideoId());
-        $this->assertEquals('GoPro: Top 10 Surf Moments', $video->getTitle());
-        $this->assertEquals('Celebrate International Surf Day with GoPro\'s Top 10 Surf Moments. Shot 100% on GoPro: http://bit.ly/2wUMwfI Get stoked and subscribe: http://goo.gl/HgVXpQ ...', $video->getDescription());
-        $this->assertEquals('https://www.youtube.com/watch?v=W7h-Yho8EB0', $video->getUrl());
-        $this->assertEquals('UCqhnX4jA0A5paNd1v-zEysw', $video->getChannelId());
-        $this->assertEquals('GoPro', $video->getChannelTitle());
-        $this->assertEquals('2019-06-15', $video->getPublishedAt()->format('Y-m-d'));
+        $this->assertEquals('ma67yOdMQfs', $video->getVideoId());
+        $this->assertEquals('These Were The All-Time Surfing Moments Of The Year | Best Of 2020', $video->getTitle());
+        $this->assertEquals('Well, that was a weird ride. Though it hasn\'t been easy, at least when we fixed our gaze on the ocean — or favorite place in the ...', $video->getDescription());
+        $this->assertEquals('https://www.youtube.com/watch?v=ma67yOdMQfs', $video->getUrl());
+        $this->assertEquals('UC--3c8RqSfAqYBdDjIG3UNA', $video->getChannelId());
+        $this->assertEquals('Red Bull Surfing', $video->getChannelTitle());
+        $this->assertEquals('2021-01-23', $video->getPublishedAt()->format('Y-m-d'));
         $this->assertEquals('none', $video->getLiveBroadcastContent());
 
         //# Thumbnails
         $this->assertCount(3, $video->getThumbnails());
         $thumbnail = $video->getThumbnail(Thumbnail::TYPE_DEFAULT);
 
-        $this->assertEquals('https://i.ytimg.com/vi/W7h-Yho8EB0/default.jpg', $thumbnail->getUrl());
+        $this->assertEquals('https://i.ytimg.com/vi/ma67yOdMQfs/default.jpg', $thumbnail->getUrl());
         $this->assertEquals(120, $thumbnail->getWidth());
         $this->assertEquals(90, $thumbnail->getHeight());
     }
 
     /** @test */
-    public function it_returns_a_valid_video_list_response()
+    public function itReturnsAValidVideoListResponse()
     {
         $youtube = YouTubeData::create($_SERVER['YOUTUBE_API_KEY'], $this->getClient());
 
@@ -100,9 +100,9 @@ class YouTubeDataTest extends TestCase
         $this->assertEquals('2012-10-01', $video->getPublishedAt()->format('Y-m-d'));
         $this->assertEquals('none', $video->getLiveBroadcastContent());
         $this->assertEquals('22', $video->getCategoryId());
-        $this->assertTrue(in_array('Amy Cuddy', $video->getTags()));
-        $this->assertTrue(in_array('TED', $video->getTags()));
-        $this->assertTrue(in_array('psychology', $video->getTags()));
+        $this->assertTrue(\in_array('Amy Cuddy', $video->getTags()));
+        $this->assertTrue(\in_array('TED', $video->getTags()));
+        $this->assertTrue(\in_array('psychology', $video->getTags()));
         $this->assertEquals('en', $video->getDefaultLanguage());
         $this->assertEquals('en', $video->getDefaultAudioLanguage());
 
@@ -112,11 +112,10 @@ class YouTubeDataTest extends TestCase
         //# Statistics
         $stats = $video->getStatistics();
         $this->assertInstanceOf(VideoStatistics::class, $stats);
-        $this->assertEquals(18351979, $stats->getViewCount());
-        $this->assertEquals(263492, $stats->getLikeCount());
-        $this->assertEquals(5173, $stats->getDislikeCount());
+        $this->assertEquals(20571094, $stats->getViewCount());
+        $this->assertEquals(317563, $stats->getLikeCount());
         $this->assertEquals(0, $stats->getFavoriteCount());
-        $this->assertEquals(8221, $stats->getCommentCount());
+        $this->assertEquals(8959, $stats->getCommentCount());
 
         //# Content Details
         $details = $video->getDetails();
@@ -130,7 +129,7 @@ class YouTubeDataTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_a_valid_channel_list_response()
+    public function itReturnsAValidChannelListResponse()
     {
         $youtube = YouTubeData::create($_SERVER['YOUTUBE_API_KEY'], $this->getClient());
 
@@ -154,7 +153,7 @@ class YouTubeDataTest extends TestCase
         $this->assertEquals('Google Developers', $channel->getTitle());
         $this->assertStringStartsWith('The Google Developers channel features talks from events', $channel->getDescription());
         $this->assertEquals('https://www.youtube.com/channel/UC_x5XG1OV2P6uZZ5FSM9Ttw', $channel->getUrl());
-        $this->assertEquals('googlecode', $channel->getCustomUrl());
+        $this->assertEquals('googledevelopers', $channel->getCustomUrl());
         $this->assertEquals('2007-08-23', $channel->getPublishedAt()->format('Y-m-d'));
         $this->assertCount(3, $channel->getThumbnails());
         $this->assertInstanceOf(Thumbnail::class, $channel->getThumbnail(Thumbnail::TYPE_DEFAULT));
@@ -162,9 +161,9 @@ class YouTubeDataTest extends TestCase
         //# Brand Settings
         $brand = $channel->getBrandingSettings();
 
-        $this->assertEquals('#000000', $brand->getProfileColor());
-        $this->assertCount(14, $brand->getImages());
-        $this->assertEquals(ChannelImage::BANNER_IMAGE_URL, $brand->getImageByType(ChannelImage::BANNER_IMAGE_URL)->getType());
+        $this->assertEquals(null, $brand->getProfileColor());
+        $this->assertCount(1, $brand->getImages());
+        $this->assertEquals(ChannelImage::BANNER_EXTERNAL_URL, $brand->getImageByType(ChannelImage::BANNER_EXTERNAL_URL)->getType());
     }
 
     protected function getClient(): PluginClient
